@@ -41,7 +41,7 @@ public class TermFrequencyCalculator implements ITermFrequency {
             
             ////////////////////////////
             for(String word : words) {
-                if(tempMap.get(word) != null) {
+                if(tempMap.get(word) == null) {
                     double wordFrequency = wordOccurences(word, words) / words.length;
                     double numerator = wordFrequency * 2.2;
                     double denominator = wordFrequency + 1.2 * (0.25 + 0.75 * words.length / avgSongLength);
