@@ -2,11 +2,23 @@ package Lab6;
 
 import java.util.TreeMap;
 
+/**
+ * @version November 1st 2023
+ * @author Ellis Fitzgerald
+ * TermFrequencyCalculator
+ */
 public class TermFrequencyCalculator implements ITermFrequency {
 
+    /**
+     * @author Ellis Fitzgerald
+     * @param songLyrics - The TreeMap that represents a key type of songTitle (String) and value type of lyrics (String)
+     * @return a TreeMap of type term (String) with its corresponding frequency
+     */
     @Override
     public TreeMap<String, TreeMap<String, Double>> getTermFrequency(TreeMap<String, String> songLyrics) {
         TreeMap<String, TreeMap<String, Double>> result = new TreeMap<String, TreeMap<String, Double>> ();
+        
+        double avgSongLength = averageSongLength(songLyrics);
         
         for(String songTitle: songLyrics.keySet())
         {
@@ -28,15 +40,52 @@ public class TermFrequencyCalculator implements ITermFrequency {
             // AvgS is the average length of songs based on number of words
             
             ////////////////////////////
-            //WRITE HERE
+            for(String word : words) {
+                if(tempMap.get(word) != null) {
+                    double wordFrequency = wordOccurences(word, words) / words.length;
+                    double numerator = wordFrequency * 2.2;
+                    double denominator = wordFrequency + 1.2 * (0.25 + 0.75 * words.length / avgSongLength);
+                    tempMap.put(word, numerator / denominator);
+     
+                }
+            }
             //////////////////////////
-            
             
             // After Calculaion
             result.put(songTitle, tempMap);
         }
         
         return result;
+    }
+    
+    /**
+     * @author Ellis Fitzgerald
+     * @param songLyrics
+     * @return averageSongLength in the number of lyrics in the song
+     */
+    public double averageSongLength(TreeMap<String, String> songLyrics) {
+        int sum;
+        for(String songTitle : songLyrics.keySet()) {
+            String[] currentSongLyrics = songLyrics.get(songTitle).split(" ");
+            sum += currentSongLyrics.length;
+        }
+        return sum / songLyrics.size();
+    }
+    
+    /**
+     * @author Ellis Fitzgerald
+     * @param wordToCheck - The word to find all occurences in {@codelyrics}
+     * @param lyrics - All the words in the song
+     * @return - The number representing how many times {@codewordToCheck} occurs in the song lyrics
+     */
+    public double wordOccurences(String wordToCheck, String[] lyrics) {
+        int occurences = 0;
+        for(String lyric : lyrics) {
+            if(lyric.equals(wordToCheck)) {
+                occurences++;
+            }
+        }
+        return occurences;
     }
 
 }
