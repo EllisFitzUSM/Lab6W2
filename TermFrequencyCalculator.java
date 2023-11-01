@@ -5,7 +5,7 @@ import java.util.TreeMap;
 /**
  * @version November 1st 2023
  * @author Ellis Fitzgerald
- * TermFrequencyCalculator
+ * TermFrequencyCalculator - Calculates a terms frequency
  */
 public class TermFrequencyCalculator implements ITermFrequency {
 
